@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import cm
-ds = pd.read_csv('C:/Users/sambr/OneDrive/Desktop/UofLNotes/Code/MLFinalProject/Data.csv')
+ds = pd.read_csv('MachineLearningFinalProject/Data.csv')
 
 y = ds["class"]
 images = ds["image_name"]
@@ -329,7 +329,7 @@ ds = ds.drop('image_name', axis=1)
 # plt.ylabel('Accuracy') 
 # plt.show()
 
-#KNN Feature selection #2 - another method found online that uses RFC
+#MNB Feature selection #2 - another method found online that uses RFC
 # X=ds.to_numpy()
 # y=y.to_numpy()
 # from sklearn.preprocessing import MinMaxScaler
@@ -1325,50 +1325,50 @@ ds = ds.drop('image_name', axis=1)
 #SVC and MLP together:  --------------------------------------
 #might need to change parameters on some of these to accomodate the best optimal values
 #might need to change to optimize noramlization to it or not use normalization at all
-from sklearn.model_selection import train_test_split
-X=ds.to_numpy()
-y=y.to_numpy()
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-Xtrain = scaler.fit_transform(X_train)
-Xtest = scaler.transform(X_test)
+# from sklearn.model_selection import train_test_split
+# X=ds.to_numpy()
+# y=y.to_numpy()
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# from sklearn.preprocessing import StandardScaler
+# scaler = StandardScaler()
+# Xtrain = scaler.fit_transform(X_train)
+# Xtest = scaler.transform(X_test)
 
-from sklearn.neural_network import MLPClassifier
-mlp = MLPClassifier(solver='lbfgs', random_state=0, alpha=100, hidden_layer_sizes=[10])
-mlp.fit(Xtrain, y_train.ravel())
+# from sklearn.neural_network import MLPClassifier
+# mlp = MLPClassifier(solver='lbfgs', random_state=0, alpha=100, hidden_layer_sizes=[10])
+# mlp.fit(Xtrain, y_train.ravel())
 
-from sklearn.svm import SVC
-svm = SVC(kernel='rbf', probability=True, C=100)
-svm.fit(Xtrain, y_train.ravel())
+# from sklearn.svm import SVC
+# svm = SVC(kernel='rbf', probability=True, C=100)
+# svm.fit(Xtrain, y_train.ravel())
 
-proba1 = mlp.predict_proba(Xtest)[:, 1]
-proba2 = svm.predict_proba(Xtest)[:, 1]
+# proba1 = mlp.predict_proba(Xtest)[:, 1]
+# proba2 = svm.predict_proba(Xtest)[:, 1]
 
-from sklearn.preprocessing import LabelEncoder
-label_encoder = LabelEncoder()
-y_test_numeric = label_encoder.fit_transform(y_test)
+# from sklearn.preprocessing import LabelEncoder
+# label_encoder = LabelEncoder()
+# y_test_numeric = label_encoder.fit_transform(y_test)
 
-plt.scatter(proba1, proba2, c=y_test_numeric, cmap='viridis')
-plt.xlabel("Model 1 Probability")
-plt.ylabel("Model 2 Probability")
-plt.title("Scatter Plot of Predicted Probabilities")
-plt.colorbar()
-plt.show()
+# plt.scatter(proba1, proba2, c=y_test_numeric, cmap='viridis')
+# plt.xlabel("Model 1 Probability")
+# plt.ylabel("Model 2 Probability")
+# plt.title("Scatter Plot of Predicted Probabilities")
+# plt.colorbar()
+# plt.show()
 
-svm_probs = svm.predict_proba(Xtest)
-mlp_probs = mlp.predict_proba(Xtest)
+# svm_probs = svm.predict_proba(Xtest)
+# mlp_probs = mlp.predict_proba(Xtest)
 
-# Scatter plots for each class
-class_labels = {0: 'person', 1: 'sign', 2: 'bike', 3: 'bus', 4: 'car'}
-n_classes = len(class_labels)
-fig, axes = plt.subplots(1, n_classes, figsize=(15, 4))
-for i, ax in enumerate(axes):
-    ax.scatter(svm_probs[:, i], mlp_probs[:, i], alpha=0.5)
-    ax.set_title(f'Class {class_labels[i]}')
-    ax.set_xlabel('SVM Probability')
-    ax.set_ylabel('MLP Probability')
+# # Scatter plots for each class
+# class_labels = {0: 'person', 1: 'sign', 2: 'bike', 3: 'bus', 4: 'car'}
+# n_classes = len(class_labels)
+# fig, axes = plt.subplots(1, n_classes, figsize=(15, 4))
+# for i, ax in enumerate(axes):
+#     ax.scatter(svm_probs[:, i], mlp_probs[:, i], alpha=0.5)
+#     ax.set_title(f'Class {class_labels[i]}')
+#     ax.set_xlabel('SVM Probability')
+#     ax.set_ylabel('MLP Probability')
 
-plt.suptitle('SVM vs. MLP Probability Scatter Plots per Class')
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.show()
+# plt.suptitle('SVM vs. MLP Probability Scatter Plots per Class')
+# plt.tight_layout(rect=[0, 0, 1, 0.95])
+# plt.show()
