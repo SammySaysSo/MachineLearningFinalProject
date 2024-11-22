@@ -2,7 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import cm
-ds = pd.read_csv('MachineLearningFinalProject/Data.csv')
+df1 = pd.read_csv('MachineLearningFinalProject/Data.csv')
+df2 = pd.read_csv('MachineLearningFinalProject/extra_hard_samples.csv')
+ds = pd.concat([df1, df2], axis=0).reset_index(drop=True)
 
 y = ds["class"]
 images = ds["image_name"]
@@ -501,7 +503,7 @@ ds = ds.drop('image_name', axis=1)
 # y=y.to_numpy()
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 # lengthOfFeaturesInOrder = np.arange(1, 257)
-# forest = RandomForestClassifier(n_estimators=1000, random_state=0)
+# forest = RandomForestClassifier(n_estimators=10, random_state=0)
 # forest.fit(X_train, y_train.ravel())
 # importances = forest.feature_importances_
 # plt.figure(figsize=(8, 4))
@@ -750,7 +752,7 @@ ds = ds.drop('image_name', axis=1)
 # y=y.to_numpy()
 # lengthOfFeaturesInOrder = np.arange(1, 257) 
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-# gbc = GradientBoostingClassifier(n_estimators=500, max_depth=3, learning_rate=0.1, random_state=42)
+# gbc = GradientBoostingClassifier(n_estimators=2, max_depth=3, learning_rate=0.1, random_state=42)
 # gbc.fit(X_train, y_train)
 # importances = gbc.feature_importances_
 # plt.figure(figsize=(8, 4))
